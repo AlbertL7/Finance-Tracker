@@ -34,3 +34,4 @@ Simply run the Python script, and you will be presented with a menu to:
 - Add and option to display Categories with a simple description of what can be categorized under them
 - Add an option to exit after selecting "Add New Record'
 - Add A help page with directions on how to use the program and how each feature works
+- *Add Feature to compare totals between multiple differetn spread sheets
