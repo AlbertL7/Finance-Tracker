@@ -66,7 +66,7 @@ def display_menu():
     if current_file:
         print(f"Currently working on: {current_file}")
     else:
-        print("*  when you adding a new record without a loaded csv, one will be created with the name 'financial_records_YYYY-MM.csv' you enter when you save.\n")
+        print("*  when you add a new record without a loaded csv, one will be created with the name 'financial_records_YYYY-MM.csv' you enter when you save.\n")
     print("1. Add New Record")
     print("2. List All Records")
     print("3. Save to CSV")
