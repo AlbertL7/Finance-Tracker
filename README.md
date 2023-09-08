@@ -23,7 +23,7 @@ Simply run the Python script, and you will be presented with a menu to:
 2. List All Records
 3. Save to CSV
 4. Show Totals
-5 Exit
-6 Select CSV File
-7 Delete Record
-8 Show Expenses by Category
+5. Exit
+6. Select CSV File
+7. Delete Record
+8. Show Expenses by Category
