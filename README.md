@@ -20,13 +20,28 @@ This is a Financial Tracking App written in Python that allows users to manage t
 Simply run the Python script, and you will be presented with a menu to:
 
 1. Add New Record
+Allows you to add a new financial record. You'll be prompted to enter the date, description, amount, type (Income/Expense), and optionally, a category if it's an expense.
+
 2. List All Records
+Displays all the financial records you have entered, sorted by month and year.
+
 3. Save to CSV
+Saves all your financial records into a CSV file. Each month and year's records will be saved into a separate CSV file named accordingly (e.g., financial_records_YYYY-MM.csv).
+
 4. Show Totals
+Calculates and displays the total income, expenses, and the remaining balance (money left) for each month and year.
+
 5. Exit
+Exits the application, terminating the program.
+
 6. Select CSV File
+Lists all the available CSV files that match the naming convention for the financial records. Allows you to select one to load its records into the application.
+
 7. Delete Record
+Allows you to delete a specific financial record. You'll be prompted to select which record to delete by providing the record's number and the month-year it belongs to.
+
 8. Show Expenses by Category
+Calculates and displays the total amount spent in each expense category, such as Food, Bills, Subscriptions, etc.
 
 ## Future Features to Add
 - Add categories
