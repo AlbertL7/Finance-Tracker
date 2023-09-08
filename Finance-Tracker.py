@@ -3,6 +3,8 @@ from collections import defaultdict
 import os
 from datetime import datetime
 
+
+current_file = None
 # Initialize a dictionary to hold financial records, keyed by month and year
 financial_records_by_month = defaultdict(list)
 
@@ -37,6 +39,9 @@ def select_csv_file():
 
 # Function to load existing records from a selected CSV file
 def load_existing_records(filename):
+    global current_file
+    current_file = filename  # Update the current file
+    print(f"Records from {current_file} loaded successfully.")
     try:
         with open(filename, 'r') as f:
             month_year = filename[18:-4]  # Extract YYYY-MM from filename
@@ -56,44 +61,60 @@ def load_existing_records(filename):
         return
 # Function to display menu options
 def display_menu():
+    global current_file
     print("\nFinancial Tracking App")
+    if current_file:
+        print(f"Currently working on: {current_file}")
+    else:
+        print("*  when you adding a new record without a loaded csv, one will be created with the name 'financial_records_YYYY-MM.csv' you enter when you save.\n")
     print("1. Add New Record")
     print("2. List All Records")
     print("3. Save to CSV")
     print("4. Show Totals")
     print("5. Exit")
-    print("6. Select CSV File")
-    print("7. Delete Record")  # New option to delete a record
-    print("8. Show Expenses by Category")  # New option to display expenses by category
+    print("6. Load / Select Existing CSV File")
+    print("7. Delete Record") 
+    print("8. Show Expenses by Category")  
+    print("9. Create New CSV File")  
     choice = input("Enter your choice: ")
     return choice
 
 # Function to add a new financial record with a category
 def add_record():
     while True:
-        date = input("Enter the date (YYYY-MM-DD): ")
+        date = input("Enter the date (YYYY-MM-DD) or type 'back' to return to the main menu: ")
+        if date.lower() == 'back':
+            print("Returning to the main menu.")
+            return
         try:
             datetime.strptime(date, '%Y-%m-%d')
             break
         except ValueError:
             print("Invalid date format. Please enter the date in YYYY-MM-DD format.")
 
-    description = input("Enter the description: ")
-    
-    while True:
-        try:
-            amount = float(input("Enter the amount: "))
+    description = input("Enter the description or type 'back' to return to the main menu: ")
+    if description.lower() == 'back':
+        print("Returning to the main menu.")
+        return
 
-             # Check if the amount exceeds 2 decimal places
+    while True:
+        amount = input("Enter the amount or type 'back' to return to the main menu: ")
+        if amount.lower() == 'back':
+            print("Returning to the main menu.")
+            return
+        try:
+            amount = float(amount)
             if float('{:.2f}'.format(amount)) != amount:
                 print("Amount should not exceed 2 decimal places. Try again.")
                 continue  # Continue the loop if amount is invalid
             break
         except ValueError:
-            print("Invalid amount entered. Record not added.")
-            return
-    
-    record_type = input("Is this income or expense? (I/E): ")
+            print("Invalid amount entered. Try again.")
+
+    record_type = input("Is this income or expense? (I/E) or type 'back' to return to the main menu: ")
+    if record_type.lower() == 'back':
+        print("Returning to the main menu.")
+        return
 
     # Initialize category as 'N/A' (or any placeholder you like)
     category = 'N/A'
@@ -109,10 +130,14 @@ def add_record():
         print("6. Work")
         print("7. Investment")
         print("8. Random")
-        category_choice = input("Select the category (1-8): ")
-    
-        category_names = ["Bills", "Food", "Subscriptions", "School", "Business", "Work", "Investment", "Random"]
-        category = category_names[int(category_choice) - 1] if category_choice.isdigit() and 1 <= int(category_choice) <= 8 else "Uncategorized"
+        print("9. Medical")
+        print("10. Health")
+        print("11. Gas")
+        print("12. Travel")
+        print("13. Car Maintenance and Repair")
+        category_choice = input("Select the category (1-13): ")
+        category_names = ["Bills", "Food", "Subscriptions", "School", "Business", "Work", "Investment", "Random", "Medical", "Health", "Gas", "Travel", "Car Maintenance and Repair"]
+        category = category_names[int(category_choice) - 1] if category_choice.isdigit() and 1 <= int(category_choice) <= 13 else "Uncategorized"
     
     record = {
         'Date': date,
@@ -126,8 +151,39 @@ def add_record():
     financial_records_by_month[month_year].append(record)
     print("Record added successfully.")
 
+def create_new_csv():
+    global current_file  # Declare the variable as global
+    new_file_name = input("Enter the name for the new CSV file (without extension): ")
+    new_file_name += ".csv"
+    
+    # Initialize the new CSV file with headers (optional)
+    with open(new_file_name, 'w', newline='') as f:
+        headers = ['Date', 'Description', 'Amount', 'Type', 'Category']
+        writer = csv.DictWriter(f, fieldnames=headers)
+        writer.writeheader()
+    
+    current_file = new_file_name  # Update the current file
+    print(f"New CSV file {new_file_name} created and set as the current file.")
+    current_file = new_file_name
 # Function to save records to a CSV file with expenses by category
 def save_to_csv():
+    global current_file
+
+    if current_file:
+        save_file_name = current_file
+        confirm_save = input(f"Are you sure you want to save the records to {save_file_name}? (Y/N): ")
+    else:
+        month_year = list(financial_records_by_month.keys())[0]  # Assuming you have at least one record
+        save_file_name = f"financial_records_{month_year}.csv"
+        confirm_save = input(f"Are you sure you want to save the records to {save_file_name}? (Y/N): ")
+
+    if confirm_save.lower() != 'y':
+        print("Save operation cancelled.")
+        return
+    if confirm_save.lower() != 'y':
+        print("Save operation cancelled.")
+        return
+    
     try:
         for month_year, records in financial_records_by_month.items():
             filename = f"financial_records_{month_year}.csv"
@@ -277,6 +333,8 @@ try:
             print("\nExpenses by Category:")
             for category, total_expense in expenses_by_category.items():
                 print(f"{category}: {total_expense:.2f}")
+        elif choice == '9':
+            create_new_csv()
         else:
             print("Invalid choice. Please try again.")
 
