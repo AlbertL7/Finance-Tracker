@@ -34,7 +34,7 @@ Calculates and displays the total income, expenses, and the remaining balance (m
 5. Exit:
 Exits the application, terminating the program.
 
-6. Select CSV File:
+6. Load / Select Existing CSV File:
 Lists all the available CSV files that match the naming convention for the financial records. Allows you to select one to load its records into the application.
 
 7. Delete Record:
@@ -43,10 +43,16 @@ Allows you to delete a specific financial record. You'll be prompted to select w
 8. Show Expenses by Category:
 Calculates and displays the total amount spent in each expense category, such as Food, Bills, Subscriptions, etc.
 
-## Future Features to Add
-- Add categories
+9. Create New CSV File:
+Create a CSV file with your own naming convention.
+
+## Updates
+Updated to include new categories
   - health, Medical, Gas, Car Maintenance and repaid, Travel
-- Add and option to display Categories with a simple description of what can be categorized under them
-- Add an option to exit after selecting "Add New Record'
+- Option to exit "Add New Record" once "Add New Record" has been initiated by typing "back"
+- Create a CSV with your own naming convention. Old default naming still exists and works.
+- Warning message for over writing already created csv files with default naming convention.
+
+## Future Features to Add
 - Add A help page with directions on how to use the program and how each feature works
 - *Add Feature to compare totals between multiple differetn spread sheets
