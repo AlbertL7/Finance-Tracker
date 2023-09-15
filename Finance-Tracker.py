@@ -67,6 +67,7 @@ def display_menu():
         print(f"Currently working on: {current_file}")
     else:
         print("*  when you add a new record without a loaded csv, one will be created with the name 'financial_records_YYYY-MM.csv' you enter when you save.\n")
+        print("*****Warning: If you are entering data to a specific csv file with the 'YYYY-MM' default naming scheme and it already exists, you must load it or the data will be overwritten with the new data that was entered and all past data will be lost :Warning*****\n")
     print("1. Add New Record")
     print("2. List All Records")
     print("3. Save to CSV")
